@@ -1,0 +1,22 @@
+# Local config holding your Resy JWTs — never commit
+config.json
+
+# Per-run output logs
+logs/
+*.log
+
+# Python cruft
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# OS noise
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp

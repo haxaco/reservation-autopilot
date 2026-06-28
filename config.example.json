@@ -1,0 +1,41 @@
+{
+  "timezone": "America/New_York",
+  "partySize": 2,
+  "proxyBase": "https://YOUR-OPENTABLE-PROXY.example.workers.dev",
+  "resyProxyBase": "https://YOUR-RESY-PROXY.example.workers.dev",
+  "windows": {
+    "9am": {
+      "start": "08:55",
+      "end": "09:05"
+    },
+    "10am": {
+      "start": "09:55",
+      "end": "10:05"
+    }
+  },
+  "venues": [
+    {
+      "slug": "example-resy-venue",
+      "name": "Example Resy Venue",
+      "platform": "resy",
+      "resyVenueId": 0,
+      "cohort": "9am",
+      "releaseHourET": "09:00",
+      "horizonDays": 21,
+      "partySize": 2,
+      "enabled": true,
+      "apiKey": "REPLACE_WITH_YOUR_RESY_JWT"
+    },
+    {
+      "slug": "example-opentable-venue",
+      "name": "Example OpenTable Venue",
+      "platform": "opentable",
+      "rid": 0,
+      "cohort": "9am",
+      "releaseHourET": "09:00",
+      "horizonDays": 7,
+      "partySize": 2,
+      "enabled": true
+    }
+  ]
+}

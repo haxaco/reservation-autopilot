@@ -1,0 +1,27 @@
+# ==============================================================
+# Reservation Autopilot — drop-window racing cron
+# ==============================================================
+# Adjust the path below to where you placed run.sh.
+
+# Nightly sweep at midnight ET (covers slow-drop venues)
+0 0 * * * /path/to/reservation-autopilot/run.sh --mode sweep
+
+# Pre-flight at 8:30 AM ET (verifies auth/sanity before drop windows)
+30 8 * * * /path/to/reservation-autopilot/run.sh --mode preflight
+
+# 9 AM cohort — racing at minutes 55, 59, 00, 02, 05
+55 8 * * * /path/to/reservation-autopilot/run.sh --mode window --cohort 9am
+59 8 * * * /path/to/reservation-autopilot/run.sh --mode window --cohort 9am
+0  9 * * * /path/to/reservation-autopilot/run.sh --mode window --cohort 9am
+2  9 * * * /path/to/reservation-autopilot/run.sh --mode window --cohort 9am
+5  9 * * * /path/to/reservation-autopilot/run.sh --mode window --cohort 9am
+
+# 10 AM cohort — same redundant pattern
+55 9  * * * /path/to/reservation-autopilot/run.sh --mode window --cohort 10am
+59 9  * * * /path/to/reservation-autopilot/run.sh --mode window --cohort 10am
+0  10 * * * /path/to/reservation-autopilot/run.sh --mode window --cohort 10am
+2  10 * * * /path/to/reservation-autopilot/run.sh --mode window --cohort 10am
+5  10 * * * /path/to/reservation-autopilot/run.sh --mode window --cohort 10am
+
+# Tip: prepend `TZ=America/New_York` above this block if your crontab
+# runs in UTC, or convert the minutes above to UTC manually.
