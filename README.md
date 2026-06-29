@@ -7,6 +7,8 @@ Designed to be dropped into another agent's workspace as a standalone
 skill. All paths are relative to this directory; no hardcoded
 `/root/.openclaw/...` references.
 
+> 🍝 **If this lands you a Carbone slot, star the repo.**
+
 ## Files
 
 | File | Purpose |
@@ -109,6 +111,68 @@ is intentional — if any single request hits a rate limit, the others
 still get a shot at the freshly-dropped tables. Tune for your venue
 mix; remove the redundancy if you're only watching slow-drop
 restaurants.
+
+## Sample output
+
+**`--mode preflight`** — checks each platform is reachable:
+
+```json
+{
+  "timestamp": "2026-06-28T04:30:02.491391-04:00",
+  "mode": "preflight",
+  "session": {
+    "ot": {
+      "ok": false,
+      "error": "OT session expired",
+      "expiresAt": "2026-04-01T18:03:45.503000+00:00"
+    },
+    "resy": { "ok": true, "error": null }
+  },
+  "resy":       { "ok": true,  "error": null },
+  "sevenrooms": { "ok": true,  "error": null },
+  "enabledVenues": 26,
+  "disabledVenues": 20
+}
+```
+
+**`--mode sweep`** — checks all enabled venues across their horizon
+window; each result is one (venue, date) probe:
+
+```json
+{
+  "timestamp": "2026-06-28T20:05:54.963175-04:00",
+  "mode": "sweep",
+  "results": [
+    {
+      "venue": "Example Bistro",
+      "slug": "example-bistro",
+      "platform": "resy",
+      "date": "2026-07-04",
+      "status": "checked",
+      "slotsFound": 2,
+      "slots": [
+        { "time": "19:00", "type": "Dining Room",  "partySize": 2 },
+        { "time": "19:30", "type": "Bar Counter",  "partySize": 2 }
+      ]
+    },
+    {
+      "venue": "Example Bistro",
+      "slug": "example-bistro",
+      "platform": "resy",
+      "date": "2026-07-05",
+      "status": "checked",
+      "slotsFound": 0,
+      "slots": []
+    }
+  ]
+}
+```
+
+For hits, filter the array for `slotsFound > 0`:
+
+```bash
+./run.sh --mode sweep | jq '.results[] | select(.slotsFound > 0)'
+```
 
 ## Logs + retention
 
